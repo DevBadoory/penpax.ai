@@ -1103,6 +1103,12 @@
 
   <script>
     // Scroll fade-in
+    // Clear hash on load so refresh doesn't jump to a section
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname);
+      window.scrollTo(0, 0);
+    }
+
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
