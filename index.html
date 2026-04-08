@@ -1288,10 +1288,22 @@
     }
     setTimeout(showLine, 1800);
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
       e.preventDefault();
-      document.getElementById('form-msg').classList.remove('hidden');
-      e.target.reset();
+      const form = e.target;
+      const data = new FormData(form);
+      const res = await fetch('https://formspree.io/f/xqegoayo', {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        document.getElementById('form-msg').classList.remove('hidden');
+        form.reset();
+      } else {
+        document.getElementById('form-msg').textContent = 'Something went wrong. Please try again.';
+        document.getElementById('form-msg').classList.remove('hidden');
+      }
     }
   </script>
 </body>
